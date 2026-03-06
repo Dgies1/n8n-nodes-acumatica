@@ -9,6 +9,7 @@ const parser = new N8NPropertiesBuilder(doc, {
   operation: new AcumaticaOperationParser()
 });
 const properties = parser.build();
+
 export class ACM_Default_23_200_001 implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Acumatica API - Endpoint Default 23 200 001',
@@ -28,6 +29,9 @@ export class ACM_Default_23_200_001 implements INodeType {
         'Content-Type': 'application/json',
       },
       baseURL: '={{$credentials.url}}',
+      qs: {
+        company: '={{$credentials.company}}',
+      },
     },
     properties: properties,
   };

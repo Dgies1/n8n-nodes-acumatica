@@ -27,6 +27,15 @@ export class AcumaticaOAuth2Api implements ICredentialType {
             required: true,
         },
         {
+            displayName: 'Company/Tenant',
+            name: 'company',
+            type: 'string',
+            default: '',
+            placeholder: 'TestCompany',
+            description: 'Your Acumatica company/tenant name',
+            required: true,
+        },
+        {
             displayName: 'Client ID',
             name: 'clientId',
             type: 'string',
@@ -88,6 +97,9 @@ export class AcumaticaOAuth2Api implements ICredentialType {
             baseURL: '={{$credentials?.url}}',
             url: '/entity/Default/23.200.001',
             method: 'GET',
+            qs: {
+                company: '={{$credentials?.company}}',
+            },
         },
     };
 }
