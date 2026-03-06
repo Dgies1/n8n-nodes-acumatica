@@ -79,14 +79,6 @@ class AcumaticaOAuth2Api {
                 default: 'body',
             },
         ];
-        this.authenticate = {
-            type: 'generic',
-            properties: {
-                headers: {
-                    Authorization: '=Bearer {{$credentials.oauthTokenData.access_token}}',
-                },
-            },
-        };
         this.test = {
             request: {
                 baseURL: '={{$credentials?.url}}',
