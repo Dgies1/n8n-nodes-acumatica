@@ -1,4 +1,5 @@
 import {
+    IAuthenticateGeneric,
     ICredentialTestRequest,
     ICredentialType,
     INodeProperties,
@@ -91,6 +92,15 @@ export class AcumaticaOAuth2Api implements ICredentialType {
             default: 'body',
         },
     ];
+
+    authenticate: IAuthenticateGeneric = {
+        type: 'generic',
+        properties: {
+            headers: {
+                Authorization: '=Bearer {{$credentials.oauthTokenData.access_token}}',
+            },
+        },
+    };
 
     test: ICredentialTestRequest = {
         request: {
