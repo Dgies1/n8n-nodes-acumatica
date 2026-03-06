@@ -22,7 +22,7 @@ export class ACM_Default_24_200_001 implements INodeType {
     defaults: { name: 'Your Service' },
     inputs: [NodeConnectionTypes.Main],
     outputs: [NodeConnectionTypes.Main],
-    credentials: [{ name: 'acumaticaOAuth2Api', required: true }],
+    credentials: [{ name: 'acumaticaOAuth2Api', required: true, genericAuth: true }],
     requestDefaults: {
       headers: {
         Accept: 'application/json',
