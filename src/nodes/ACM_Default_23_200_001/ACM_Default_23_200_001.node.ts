@@ -86,17 +86,17 @@ export class ACM_Default_23_200_001 implements INodeType {
         if (top) qs['$top'] = String(top);
       } catch {}
 
-      const options = {
-        method,
-        url,
-        qs,
-        body,
-        json: true,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      };
+    const options = {
+      method,
+      url,
+      qs,
+      data: Object.keys(body).length ? body : undefined,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
+
 
       const response = await this.helpers.requestOAuth2.call(
         this,
