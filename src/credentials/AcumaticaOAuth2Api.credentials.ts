@@ -1,5 +1,4 @@
 import {
-    IAuthenticateGeneric,
     ICredentialTestRequest,
     ICredentialType,
     INodeProperties,
@@ -9,6 +8,8 @@ export class AcumaticaOAuth2Api implements ICredentialType {
     name = 'acumaticaOAuth2Api';
     displayName = 'Acumatica OAuth2 API';
     documentationUrl = 'https://help.acumatica.com/';
+    extends = ['oAuth2Api'];
+    genericAuth = true;
 
     properties: INodeProperties[] = [
         {
@@ -91,15 +92,6 @@ export class AcumaticaOAuth2Api implements ICredentialType {
             default: 'body',
         },
     ];
-
-    authenticate: IAuthenticateGeneric = {
-        type: 'generic',
-        properties: {
-            headers: {
-                Authorization: '=Bearer {{$credentials.oauthTokenData.access_token}}',
-            },
-        },
-    };
 
     test: ICredentialTestRequest = {
         request: {
