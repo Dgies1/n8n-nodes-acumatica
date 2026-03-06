@@ -96,7 +96,7 @@ export class AcumaticaOAuth2Api implements ICredentialType {
     test: ICredentialTestRequest = {
         request: {
             baseURL: '={{$credentials?.url}}',
-            url: '/entity/Default/24.200.001',
+            url: '/entity/Default/23.200.001',
             method: 'GET',
         },
     };
