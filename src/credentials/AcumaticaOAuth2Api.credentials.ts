@@ -9,7 +9,6 @@ export class AcumaticaOAuth2Api implements ICredentialType {
     name = 'acumaticaOAuth2Api';
     displayName = 'Acumatica OAuth2 API';
     documentationUrl = 'https://help.acumatica.com/';
-    extends = ['oAuth2Api'];
 
     properties: INodeProperties[] = [
         {
