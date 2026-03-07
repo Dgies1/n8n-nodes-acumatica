@@ -58,11 +58,14 @@ export class ACM_Default_23_200_001 implements INodeType {
       // Build URL
       let url = `${baseURL}/entity/Default/23.200.001/${resource}`;
 
-      // Get optional ID parameter
+      // Get optional ID parameter - check node param first, then input item
       try {
         const id = this.getNodeParameter('id', i) as string;
         if (id) url += `/${id}`;
-      } catch {}
+      } catch {
+        const inputId = (items[i].json as any)._orderId;
+        if (inputId) url += `/${inputId}`;
+      }
 
       // Build body - for write operations always use input item data
       let body: object | undefined = undefined;
