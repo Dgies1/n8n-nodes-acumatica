@@ -64,12 +64,11 @@ export class ACM_Default_23_200_001 implements INodeType {
         if (id) url += `/${id}`;
       } catch {}
 
-      // Get optional body
-      let body = {};
-      try {
-        const bodyParam = this.getNodeParameter('body', i) as object;
-        if (bodyParam) body = bodyParam;
-      } catch {}
+      // Build body - for write operations always use input item data
+      let body: object | undefined = undefined;
+      if (['upsert', 'create', 'action'].includes(operation)) {
+        body = items[i].json as object;
+      }
 
       // Get optional query params
       const qs: Record<string, string> = { company };
@@ -90,7 +89,8 @@ export class ACM_Default_23_200_001 implements INodeType {
         method,
         url,
         qs,
-        data: Object.keys(body).length ? body : undefined,
+        body,
+        json: true,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
