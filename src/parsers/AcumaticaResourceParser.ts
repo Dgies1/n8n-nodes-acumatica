@@ -6,24 +6,14 @@ import { OpenAPIV3 } from 'openapi-types';
 import * as lodash from 'lodash';
 
 export class AcumaticaResourceParser extends DefaultResourceParser {
-    // Extract entity names from paths like "/{entity}"
-    getResources(document: OpenAPIV3.Document): Array<{ name: string, value: string, description: string }> {
-        const entities = new Set<string>();
+    value(tag: OpenAPIV3.TagObject): string {
+        // Return tag name as-is to preserve SalesOrder, Customer etc for use in URL
+        return tag.name;
+    }
 
-        // Parse paths to extract entity names
-        Object.keys(document.paths).forEach(path => {
-            // Match patterns like /SalesOrder, /Customer, etc.
-            const match = path.match(/^\/([A-Z][a-zA-Z]+)(?:\/|$)/);
-            if (match && match[1] !== 'entity') {
-                entities.add(match[1]);
-            }
-        });
-
-        return Array.from(entities).sort().map(entity => ({
-            name: lodash.startCase(entity),
-            value: entity,
-            description: `Operations for ${lodash.startCase(entity)}`
-        }));
+    name(tag: OpenAPIV3.TagObject): string {
+        // Add spaces for display: SalesOrder -> Sales Order
+        return tag.name.replace(/([A-Z])/g, ' $1').trim();
     }
 }
 
@@ -39,7 +29,6 @@ export class AcumaticaOperationParser extends DefaultOperationParser {
             case 'DELETE':
                 return 'Delete';
             case 'POST':
-                // Handle action endpoints
                 return operation.operationId?.includes('action') ? 'Execute Action' : 'Create';
             default:
                 return lodash.startCase(method);
