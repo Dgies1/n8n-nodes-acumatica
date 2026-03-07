@@ -88,6 +88,16 @@ export class ACM_Default_23_200_001 implements INodeType {
         if (top) qs['$top'] = String(top);
       } catch {}
 
+      // Allow filter/top/select to be passed via input item (prefixed with _)
+      const inputFilter = (items[i].json as any)._filter;
+      if (inputFilter) qs['$filter'] = inputFilter;
+
+      const inputTop = (items[i].json as any)._top;
+      if (inputTop) qs['$top'] = String(inputTop);
+
+      const inputSelect = (items[i].json as any)._select;
+      if (inputSelect) qs['$select'] = inputSelect;
+
       // Build body - for write operations always use input item data
       let body: object | undefined = undefined;
       if (['upsert', 'create', 'action'].includes(operation)) {
