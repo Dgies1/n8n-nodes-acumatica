@@ -72,7 +72,7 @@ export class ACM_Default_23_200_001 implements INodeType {
 
       // For SalesOrder upsert, request OrderNbr back in response
       if (resource === 'SalesOrder' && operation === 'upsert') {
-        qs['$select'] = 'OrderNbr,CustomerID,OrderType,id';
+        qs['$select'] = 'OrderNbr,CustomerID,OrderType';
       }
 
       try {
