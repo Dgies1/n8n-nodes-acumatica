@@ -67,14 +67,14 @@ export class ACM_Default_23_200_001 implements INodeType {
         if (inputId) url += `/${inputId}`;
       }
 
-      // Build body - for write operations always use input item data
-      let body: object | undefined = undefined;
-      if (['upsert', 'create', 'action'].includes(operation)) {
-        body = items[i].json as object;
-      }
-
       // Get optional query params
       const qs: Record<string, string> = { company };
+
+      // For SalesOrder upsert, request OrderNbr back in response
+      if (resource === 'SalesOrder' && operation === 'upsert') {
+        qs['$select'] = 'OrderNbr,CustomerID,OrderType,id';
+      }
+
       try {
         const select = this.getNodeParameter('$select', i) as string;
         if (select) qs['$select'] = select;
@@ -87,6 +87,12 @@ export class ACM_Default_23_200_001 implements INodeType {
         const top = this.getNodeParameter('$top', i) as number;
         if (top) qs['$top'] = String(top);
       } catch {}
+
+      // Build body - for write operations always use input item data
+      let body: object | undefined = undefined;
+      if (['upsert', 'create', 'action'].includes(operation)) {
+        body = items[i].json as object;
+      }
 
       const options = {
         method,
